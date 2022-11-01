@@ -1,7 +1,8 @@
 import versions, { VersionBytes } from "../versions";
 
 import bs58 from "bs58";
-import crypto from "crypto";
+
+import { hash160, sha256 } from "../util/crypto-js";
 
 export interface BitcoinAddressConstructorOptions {
   publicKey: Buffer;
@@ -73,11 +74,5 @@ export default class BitcoinAddress {
   }
 }
 
-function sha256(data: Buffer): Buffer {
-  return crypto.createHash("sha256").update(data).digest();
-}
 
-function hash160(data: Buffer): Buffer {
-  const d = crypto.createHash("sha256").update(data).digest();
-  return crypto.createHash("rmd160").update(d).digest();
-}
+

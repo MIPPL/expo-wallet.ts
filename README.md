@@ -1,4 +1,6 @@
-# wallet.ts
+# expo-wallet.ts
+
+Removes wallet.ts dependency on node's crypto library
 
 [![npm version](https://badge.fury.io/js/wallet.ts.svg)](https://www.npmjs.com/package/wallet.ts)
 [![Downloads](https://img.shields.io/npm/dm/wallet.ts.svg)](https://www.npmjs.com/package/wallet.ts)

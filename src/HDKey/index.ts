@@ -1,8 +1,9 @@
 import BN from "bn.js";
 import * as bs58 from "bs58";
-import * as crypto from "crypto";
 import { ec as EC, eddsa as EDDSA } from "elliptic";
 import versions, { VersionBytes } from "../versions";
+
+import { hash160, hmacSha512, sha256 } from "../util/crypto-js";
 
 // Implements BIP-32: https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki
 // Added ED25519 support: https://github.com/satoshilabs/slips/blob/master/slip-0010.md
@@ -356,19 +357,6 @@ export class HDKey {
     const checksum = sha256(sha256(buf)).slice(0, 4);
     return bs58.encode(Buffer.concat([buf, checksum]));
   }
-}
-
-function hmacSha512(key: Buffer | string, data: Buffer): Buffer {
-  return crypto.createHmac("sha512", key).update(data).digest();
-}
-
-function sha256(data: Buffer): Buffer {
-  return crypto.createHash("sha256").update(data).digest();
-}
-
-function hash160(data: Buffer): Buffer {
-  const d = crypto.createHash("sha256").update(data).digest();
-  return crypto.createHash("rmd160").update(d).digest();
 }
 
 function publicFromPrivateKey(

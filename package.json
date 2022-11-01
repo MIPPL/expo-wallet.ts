@@ -1,7 +1,7 @@
 {
-  "name": "wallet.ts",
+  "name": "expo-wallet.ts",
   "version": "1.0.1",
-  "description": "Utilities for cryptocurrency wallets, written in TypeScript",
+  "description": "Expo-compatible utilities for cryptocurrency wallets, written in TypeScript",
   "keywords": [
     "crypto",
     "cryptocurrency",
@@ -20,7 +20,7 @@
   ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "repository": "https://github.com/petejkim/wallet.ts",
+  "repository": "https://github.com/MIPPL/expo-wallet.ts",
   "author": "Peter Jihoon Kim",
   "license": "ISC",
   "scripts": {
@@ -32,8 +32,10 @@
     "lint-watch": "nodemon -e ts,tsx,js,json --watch src/ --exec 'yarn tsc && yarn lint'"
   },
   "dependencies": {
+    "@types/crypto-js": "^4.1.1",
     "bn.js": "^5.1.3",
     "bs58": "^4.0.1",
+    "crypto-js": "^3.1.9-1",
     "elliptic": "^6.5.3",
     "keccak": "^3.0.1"
   },
