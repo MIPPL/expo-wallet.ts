@@ -1,5 +1,6 @@
-import * as crypto from "crypto";
 import englishWordList from "./wordlist.en";
+
+import { pbkdf2, pbkdf2Sync, sha256 } from "../util/crypto-js";
 
 export type Pbkdf2SyncFunction = (
   password: string | Buffer,
@@ -19,8 +20,8 @@ export type Pbkdf2Function = (
 ) => void;
 
 export class Mnemonic {
-  public static pbkdf2Sync: Pbkdf2SyncFunction = crypto.pbkdf2Sync;
-  public static pbkdf2: Pbkdf2Function = crypto.pbkdf2;
+  public static pbkdf2Sync: Pbkdf2SyncFunction = pbkdf2Sync;
+  public static pbkdf2: Pbkdf2Function = pbkdf2;
 
   private _entropy: Buffer;
   private _wordList: string[];
@@ -78,7 +79,7 @@ export class Mnemonic {
       entropy.push(eightBitsToInt(bits.slice(i * 8, (i + 1) * 8)));
     }
     const entropyBuf = Buffer.from(entropy);
-    const shasum = crypto.createHash("sha256").update(entropyBuf).digest();
+    const shasum = sha256(entropyBuf);
     const checksumFromSha = flatten(
       Array.from(shasum).map(uint8ToBitArray)
     ).slice(0, cs);
@@ -100,7 +101,7 @@ export class Mnemonic {
       const cs = ent / 32;
 
       const bits = flatten(Array.from(this.entropy).map(uint8ToBitArray));
-      const shasum = crypto.createHash("sha256").update(this.entropy).digest();
+      const shasum = sha256(this.entropy);
       const checksum = flatten(Array.from(shasum).map(uint8ToBitArray)).slice(
         0,
         cs

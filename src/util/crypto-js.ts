@@ -63,13 +63,59 @@ export function hash160(data: Buffer): Buffer {
 
 export function hmacSha512(key: Buffer | string, data: Buffer): Buffer {
     var keyWord: CryptoJS.lib.WordArray | string;
-    if (typeof key == 'string') {
+    if (typeof key == 'string')
         keyWord = key
-    }
-    else {
-        keyWord = byteArrayToWordArray(key)
-    }
+    else keyWord = byteArrayToWordArray(key)
+
     return Buffer.from(wordArrayToByteArray(CryptoJS.HmacSHA512(byteArrayToWordArray(data), keyWord), 32))
 }
 
-export default { sha256, hash160, hmacSha512 };
+export function pbkdf2Sync(password: string | Buffer,
+    salt: string | Buffer,
+    iterations: number,
+    keylen: number,
+    digest: string
+): Buffer {
+
+    var passwordWord: CryptoJS.lib.WordArray | string;
+    if (typeof password == 'string')
+        passwordWord = password
+    else passwordWord = byteArrayToWordArray(password)
+
+    var saltWord: CryptoJS.lib.WordArray | string;
+    if (typeof salt == 'string')
+        saltWord = salt
+    else saltWord = byteArrayToWordArray(salt)
+
+    var hasher: any;
+    switch (digest) {
+        case "sha512":
+            hasher = CryptoJS.algo.SHA512
+            break;
+        case "sha256":
+            hasher = CryptoJS.algo.SHA256
+            break;
+        default:
+            hasher = CryptoJS.algo.SHA1
+    }
+    var returnWord: CryptoJS.lib.WordArray = CryptoJS.PBKDF2(
+        passwordWord,
+        saltWord,
+        { keySize: keylen / 4, iterations: iterations, hasher: hasher })
+
+    return Buffer.from(wordArrayToByteArray(returnWord, 64))
+}
+
+export async function pbkdf2(password: string | Buffer,
+    salt: string | Buffer,
+    iterations: number,
+    keylen: number,
+    digest: string,
+    callback: (err: Error | null, derivedKey: Buffer | null) => void
+) {
+    // no async version in crypto-js
+    const buf: Buffer = pbkdf2Sync(password, salt, iterations, keylen, digest)
+    callback(null, buf)
+}
+
+export default { sha256, hash160, hmacSha512, pbkdf2Sync, pbkdf2 };
