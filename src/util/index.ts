@@ -1,5 +1,5 @@
+import { Buffer } from "buffer";
 import { ec as EC, ECKeyPair } from "elliptic";
-
 const secp256k1 = new EC("secp256k1");
 
 export function decompressPublicKey(publicKey: Buffer): Buffer {

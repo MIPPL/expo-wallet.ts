@@ -3,6 +3,7 @@ import * as bs58 from "bs58";
 import { ec as EC, eddsa as EDDSA } from "elliptic";
 import versions, { VersionBytes } from "../versions";
 
+import { Buffer } from "buffer";
 import { hash160, hmacSha512, sha256 } from "../util/crypto-js";
 
 // Implements BIP-32: https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki

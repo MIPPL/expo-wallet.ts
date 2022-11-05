@@ -2,6 +2,7 @@ import versions, { VersionBytes } from "../versions";
 
 import bs58 from "bs58";
 
+import { Buffer } from "buffer";
 import { hash160, sha256 } from "../util/crypto-js";
 
 export interface BitcoinAddressConstructorOptions {

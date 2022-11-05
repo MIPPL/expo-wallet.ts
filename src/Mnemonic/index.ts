@@ -1,5 +1,6 @@
 import englishWordList from "./wordlist.en";
 
+import { Buffer } from "buffer";
 import { pbkdf2, pbkdf2Sync, sha256 } from "../util/crypto-js";
 
 export type Pbkdf2SyncFunction = (

@@ -1,3 +1,4 @@
+import { Buffer } from 'buffer';
 import CryptoJS from 'crypto-js';
 
 // crypto-js uses WordArrays, need conversion functions... 
