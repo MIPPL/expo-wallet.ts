@@ -27,6 +27,7 @@
     "test": "jest",
     "fmt": "prettier --write 'src/**/*.ts' '*.json' '*.md'",
     "dist": "rm -rf dist && tsc --build",
+    "prepare": "rm -rf dist && tsc --build",
     "tsc": "tsc --noEmit --pretty",
     "lint": "yarn tsc && tslint -p . 'src/**/*.ts'",
     "lint-watch": "nodemon -e ts,tsx,js,json --watch src/ --exec 'yarn tsc && yarn lint'"
